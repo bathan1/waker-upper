@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Form from './components/Form'
+import WakeUpViewer from './components/WakeUpViewer'
 
 function App() {
   const [bedtime, setBedtime] = useState('');
@@ -52,6 +53,7 @@ function App() {
       <p>If you go to bed now, when should you wake up? </p>
 
       <Form bedtime={bedtime} calculateWakeTime={calculateWakeTime} handleTimeChange={handleTimeChange}/>
+      <WakeUpViewer wakeUpTimes={wakeUpTimes} />
     </div>
   );
 }
