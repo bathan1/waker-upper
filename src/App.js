@@ -3,6 +3,7 @@ import Form from './components/Form'
 
 function App() {
   const [bedtime, setBedtime] = useState('');
+  const [wakeUpTimes, setWakeUpTimes] = useState([]);
 
   const handleTimeChange = (event) => {
     let userBedtime = event.target.value;
@@ -20,6 +21,7 @@ function App() {
     fallAsleepHour = Number(fallAsleepHour);
     let fallAsleepMinutes = Number(minutes) + 14;
 
+    // Set time
     while (fallAsleepMinutes >= 60) {
       fallAsleepMinutes -= 60;
       fallAsleepHour += 1;
@@ -27,12 +29,19 @@ function App() {
 
     fallAsleepTime.setHours(fallAsleepHour);
     fallAsleepTime.setMinutes(fallAsleepMinutes);
-    
-    console.log(fallAsleepTime);
 
+    const wakeUpTime = new Date(fallAsleepTime);
+    let wakeUpTimesArr = [];
     for (let i = 0; i <= 6; i++) {
-      
+      wakeUpTime.setMinutes(wakeUpTime.getMinutes() + 90);
+      const wakeUpTimeString = wakeUpTime.toLocaleTimeString('en-US', {
+        timeStyle: 'short'
+      });
+      wakeUpTimesArr.push(wakeUpTimeString);
     }
+    
+    setWakeUpTimes(wakeUpTimesArr);
+    console.log(wakeUpTimes);
   }
 
   return (
