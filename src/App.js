@@ -39,10 +39,10 @@ function App() {
       fallAsleepMinutes -= 60;
       fallAsleepHour += 1;
     }
-
     fallAsleepTime.setHours(fallAsleepHour);
     fallAsleepTime.setMinutes(fallAsleepMinutes);
 
+    // Get wakeUpTimes
     const wakeUpTime = new Date(fallAsleepTime);
     let wakeUpTimesArr = [];
     for (let i = 0; i <= 6; i++) {
