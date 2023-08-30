@@ -5,6 +5,7 @@ import WakeUpViewer from './components/WakeUpViewer'
 function App() {
   const [bedtime, setBedtime] = useState('');
   const [wakeUpTimes, setWakeUpTimes] = useState([]);
+  const [timeDesignation, setTimeDesignation] = useState('PM');
 
   const handleTimeChange = (event) => {
     let userBedtime = event.target.value;
@@ -14,13 +15,24 @@ function App() {
   const calculateWakeTime = (event) => {
     event.preventDefault();
 
+    // Set the time to user bedtime
+    let [fallAsleepHour, fallAsleepMinutes] = bedtime.split(':');
+    fallAsleepMinutes = Number(fallAsleepMinutes);
+    fallAsleepHour = Number(fallAsleepHour);
+
     // Create new Date object with today's date
     let fallAsleepTime = new Date();
+    fallAsleepTime.setMinutes(fallAsleepMinutes);
+    fallAsleepTime.setHours(fallAsleepHour);
 
-    // Set the time to user bedtime
-    let [fallAsleepHour, minutes] = bedtime.split(':');
-    fallAsleepHour = Number(fallAsleepHour);
-    let fallAsleepMinutes = Number(minutes) + 14;
+    // Check time designation
+    if (timeDesignation === 'AM') {
+      fallAsleepHour = Number(fallAsleepHour);
+      fallAsleepMinutes += 14;
+    } else {
+      fallAsleepHour = Number(fallAsleepHour) + 12;
+      fallAsleepMinutes += 14;
+    }
 
     // Set time
     while (fallAsleepMinutes >= 60) {
@@ -42,7 +54,6 @@ function App() {
     }
     
     setWakeUpTimes(wakeUpTimesArr);
-    console.log(wakeUpTimes);
   }
 
   return (
@@ -50,9 +61,9 @@ function App() {
       <h1>Waker Upper App</h1>
       <p> A sleep cycle lasts about 90 minutes, and a good night's sleep consists of 5-6 sleep cycles.</p>
       <p>If you wake up in the middle of a sleep cycle, you will feel groggy, even if you've completed several cycles prior to waking up.</p>
-      <p>If you go to bed now, when should you wake up? </p>
+      <p>If you go to bed at the time you write, when should you wake up? </p>
 
-      <Form bedtime={bedtime} calculateWakeTime={calculateWakeTime} handleTimeChange={handleTimeChange}/>
+      <Form bedtime={bedtime} timeDesignation={timeDesignation} setTimeDesignation={setTimeDesignation} calculateWakeTime={calculateWakeTime} handleTimeChange={handleTimeChange}/>
       <WakeUpViewer wakeUpTimes={wakeUpTimes} />
     </div>
   );
