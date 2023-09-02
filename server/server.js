@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const path = require('path');
 const authRoutes = require('./routes/auth'); // Import POST requests for signing up users
 
+// Import mongoose db key
+const config = require('./config');
+const mongoURI = config.mongoURI;
+
 // Begin Express App
 const app = express();
 
@@ -14,6 +18,22 @@ app.use(express.static(path.join(__dirname, buildDir)));
 
 // Set up json data parsing
 app.use(express.json());
+
+// Connect to MongoDB with mongoose
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+const db = mongoose.connection;
+
+db.on('error', (error) => {
+    console.error('MongoDB connection error:', error);
+});
+
+db.once('open', () => {
+    console.log('Connected to MongoDB');
+});
 
 // Mount signup page route
 app.use(authRoutes);
