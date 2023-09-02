@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, buildDir)));
 app.use(express.json());
 
 // Mount signup page route
-app.use('/auth', authRoutes);
+app.use(authRoutes);
 
 // Start the Express server
 const port = process.env.PORT || 3000;
