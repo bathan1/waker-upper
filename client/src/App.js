@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import Form from './components/Form'
+import BedtimeForm from './components/BedtimeForm'
 import WakeUpViewer from './components/WakeUpViewer'
+import SignupForm from './components/SignupForm'
 
 function App() {
   const [bedtime, setBedtime] = useState('');
@@ -63,8 +64,12 @@ function App() {
       <p>If you wake up in the middle of a sleep cycle, you will feel groggy, even if you've completed several cycles prior to waking up.</p>
       <p>If you go to bed at the time you write, when should you wake up? </p>
 
-      <Form bedtime={bedtime} timeDesignation={timeDesignation} setTimeDesignation={setTimeDesignation} calculateWakeTime={calculateWakeTime} handleTimeChange={handleTimeChange}/>
+      <BedtimeForm bedtime={bedtime} timeDesignation={timeDesignation} setTimeDesignation={setTimeDesignation} calculateWakeTime={calculateWakeTime} handleTimeChange={handleTimeChange}/>
       <WakeUpViewer wakeUpTimes={wakeUpTimes} />
+      <br></br>
+
+      <p>Sign up to save your bedtimes</p>
+      <SignupForm />
     </div>
   );
 }
