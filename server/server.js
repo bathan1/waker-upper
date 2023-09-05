@@ -10,14 +10,13 @@ const mongoURI = config.mongoURI;
 // Begin Express App
 const app = express();
 
-// Save React Build path
-const buildDir = '../client/build';
-
-// Use static middleware to serve final React Build file
-app.use(express.static(path.join(__dirname, buildDir)));
-
 // Set up json data parsing
 app.use(express.json());
+
+// Save React Build path
+const buildDir = '../client/build';
+// Use static middleware to serve final React Build file
+app.use(express.static(path.join(__dirname, buildDir)));
 
 // Connect to MongoDB with mongoose
 mongoose.connect(mongoURI, {
