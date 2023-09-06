@@ -51,8 +51,22 @@ const SignupForm = (props) => {
         }
     };
 
+    let savedBedtimesView = null;
+    if (props.isSignedIn) {
+        savedBedtimesView = 
+        <div>
+            <div>Your saved bedtimes: </div>
+            <ul>
+                {props.userBedtimes.map((bedtime, index) => {
+                    return <li key={index}>{bedtime}</li>
+                })}
+            </ul>
+        </div>
+    }
+
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
+            <form onSubmit={handleSubmit}>
             <input
                 type="text"
                 name="username"
@@ -71,8 +85,10 @@ const SignupForm = (props) => {
             <br></br>
             <button type="submit" onClick={() => setButtonPressed("signUp")}>Sign up</button>
             <button type="submit" onClick={() => setButtonPressed("signIn")}>Sign in</button>
-            { props.isSignedIn ? <div>Welcome {formData.username} </div> : null}
         </form>
+        {savedBedtimesView}
+        </div>
+        
     );
 };
 

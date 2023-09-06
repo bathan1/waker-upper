@@ -1,7 +1,12 @@
 const Form = (props) => {
+    const handleSaveBedtime = () => {
+        props.userBedtimes.push(props.bedtime + " " + props.timeDesignation);
+        props.setUserBedtimes(props.userBedtimes);
+    };
+
     let saveButton = null;
     if (props.isSignedIn) {
-        saveButton = <button type="submit">Save bedtime</button>
+        saveButton = <button type="submit" onClick={handleSaveBedtime}>Save bedtime</button>
     }
 
     return (
