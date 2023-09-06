@@ -86,7 +86,7 @@ function App() {
       <br></br>
 
       <p>Sign up to save your bedtimes</p>
-      <SignupForm currentUser={currentUser} setCurrentUser={setCurrentUser} formData={formData} setFormData={setFormData} isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} userBedtimes={userBedtimes} timeDesignation={timeDesignation}/>
+      <SignupForm currentUser={currentUser} setCurrentUser={setCurrentUser} formData={formData} setFormData={setFormData} isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} userBedtimes={userBedtimes} setUserBedtimes={setUserBedtimes} timeDesignation={timeDesignation}/>
     </div>
   );
 }

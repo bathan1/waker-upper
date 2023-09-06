@@ -25,25 +25,27 @@ const SignupForm = (props) => {
                     console.log("Registration failed :(");
                 }
             } else {
-                    await fetch("/signin", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(props.formData)
-                    })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.message === "Logged in successfully" && data.user) {
-                            console.log("Signed in!");
-                            const user = data.user;
-                            props.setCurrentUser(user);
-                            props.setIsSignedIn(true);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Invalid username or password")
-                    });
+                await fetch("/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(props.formData)
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.message === "Logged in successfully" && data.user) {
+                        console.log("Signed in!");
+                        const user = data.user;
+                        props.setCurrentUser(user);
+                        props.setIsSignedIn(true);
+                        props.setUserBedtimes(user.bedtimes);
+                        event.preventDefault();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Invalid username or password")
+                });
             }
             
         } catch (error) {
@@ -58,7 +60,7 @@ const SignupForm = (props) => {
             <div>Welcome {props.formData.username}</div>
             <div>Your saved bedtimes: </div>
             <ul>
-                {props.currentUser.bedtimes.map((bedtime, index) => {
+                {props.userBedtimes.map((bedtime, index) => {
                     return <li key={index}>{bedtime}</li>
                 })}
             </ul>
