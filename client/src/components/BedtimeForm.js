@@ -1,5 +1,10 @@
 const Form = (props) => {
-    return(
+    let saveButton = null;
+    if (props.isSignedIn) {
+        saveButton = <button type="submit">Save bedtime</button>
+    }
+
+    return (
         <form onSubmit={props.calculateWakeTime}>
             <label>
                 <input 
@@ -12,6 +17,7 @@ const Form = (props) => {
                     <option value="PM">PM</option>
                 </select>
                 <button type="submit">Calculate bed time!</button>
+                {saveButton}
             </label>
         </form>
     )

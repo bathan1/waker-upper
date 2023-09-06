@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SignupForm = () => {
+const SignupForm = (props) => {
     const [buttonPressed, setButtonPressed] = useState("signUp");
 
     const [formData, setFormData] = useState({
@@ -40,6 +40,7 @@ const SignupForm = () => {
 
                 if (response.status === 201) {
                     console.log("Signed in!");
+                    props.setIsSignedIn(true);
                 } else {
                     console.log("Invalid username or password");
                 }
