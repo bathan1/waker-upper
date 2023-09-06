@@ -3,14 +3,9 @@ import React, { useState } from 'react';
 const SignupForm = (props) => {
     const [buttonPressed, setButtonPressed] = useState("signUp");
 
-    const [formData, setFormData] = useState({
-        username: '',
-        password: ''
-    });
-
     const handleChange = (event) => {
         const {name, value}  = event.target;
-        setFormData({ ...formData, [name]: value });
+        props.setFormData({ ...props.formData, [name]: value });
     };
 
     const handleSubmit = async (event) => {
@@ -22,7 +17,7 @@ const SignupForm = (props) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify(props.formData)
                 });
                 if (response.status === 201) {
                     console.log("Registration success");
@@ -35,7 +30,7 @@ const SignupForm = (props) => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify(props.formData)
                 });
 
                 if (response.status === 201) {
@@ -70,7 +65,7 @@ const SignupForm = (props) => {
             <input
                 type="text"
                 name="username"
-                value={formData.username}
+                value={props.formData.username}
                 onChange={handleChange}
                 placeholder="Username"
             />
@@ -78,7 +73,7 @@ const SignupForm = (props) => {
             <input
                 type="password"
                 name="password"
-                value={formData.password}
+                value={props.formData.password}
                 onChange={handleChange}
                 placeholder="Password"
             />
