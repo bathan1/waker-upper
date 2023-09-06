@@ -5,7 +5,10 @@ const userSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true},
     plainTextPassword: {type: String, required: true},
     password: {type: String, required: true},
-    bedtimes: [{ type: String }]
+    bedtimes: [{ 
+        _id: {type: String},
+        bedtime: {type: String} 
+    }]
 });
 
 // Create function to compare passwords

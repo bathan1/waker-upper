@@ -1,7 +1,15 @@
+const { v4: uuidv4 } = require("uuid");
+
 const BedtimeForm = (props) => {
-    const handleSaveBedtimes = async () => {
-        props.userBedtimes.push(props.bedtime + " " + props.timeDesignation);
-        props.setUserBedtimes(props.userBedtimes);
+    const handleSaveBedtimes = async (event) => {
+        event.preventDefault();
+        const newBedtimes = [...props.userBedtimes];
+        const bedtimeId = uuidv4();
+        newBedtimes.push({ 
+            _id: bedtimeId,
+            bedtime: props.bedtime + " " + props.timeDesignation 
+        });
+        props.setUserBedtimes(newBedtimes);
         const signInData = {
             username: props.currentUser.username,
             password: props.currentUser.plainTextPassword
@@ -24,7 +32,8 @@ const BedtimeForm = (props) => {
             console.error("Error:", error);
         }
 
-        const updatedBedtimes = props.userBedtimes;
+        const updatedBedtimes = newBedtimes;
+        console.log(updatedBedtimes);
 
         try {
             const response = await fetch(`/api/users/${props.currentUser._id}/bedtimes`, {
@@ -40,7 +49,7 @@ const BedtimeForm = (props) => {
     
             if (response.status === 200) {
                 console.log("Bedtime updated successfully");
-                // Update your userBedtimes state here if needed
+                
             } else {
                 console.log("Failed to update bedtime");
             }
