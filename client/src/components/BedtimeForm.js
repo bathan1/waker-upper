@@ -23,15 +23,17 @@ const Form = (props) => {
             console.error("Error:", error);
         }
 
+        const updatedBedtimes = props.userBedtimes;
+
         try {
-            const response = await fetch("/updateBedtimes", {
+            const response = await fetch(`/api/users/${props.userId}/bedtimes`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     userId: props.userId, // Assuming you have access to the user's ID
-                    newBedtime: props.bedtime + " " + props.timeDesignation,
+                    bedtimes: updatedBedtimes
                 }),
             });
     
