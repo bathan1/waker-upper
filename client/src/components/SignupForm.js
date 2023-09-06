@@ -25,20 +25,25 @@ const SignupForm = (props) => {
                     console.log("Registration failed :(");
                 }
             } else {
-                const response = await fetch("/signin", {
+                    await fetch("/signin", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(props.formData)
-                });
-
-                if (response.status === 201) {
-                    console.log("Signed in!");
-                    props.setIsSignedIn(true);
-                } else {
-                    console.log("Invalid username or password");
-                }
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.message === "Logged in successfully" && data.user) {
+                            console.log("Signed in!");
+                            const user = data.user;
+                            props.setCurrentUser(user);
+                            props.setIsSignedIn(true);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Invalid username or password")
+                    });
             }
             
         } catch (error) {
@@ -49,7 +54,8 @@ const SignupForm = (props) => {
     let savedBedtimesView = null;
     if (props.isSignedIn) {
         savedBedtimesView = 
-        <div>
+        <div>  
+            <div>Welcome {props.formData.username}</div>
             <div>Your saved bedtimes: </div>
             <ul>
                 {props.userBedtimes.map((bedtime, index) => {

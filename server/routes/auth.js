@@ -48,7 +48,7 @@ router.post("/signin", async (req, res) => {
             return res.status(401).json({ message: "Invalid password" });
         }
 
-        return res.status(201).json({ message: "Logged in successfully", _id: existingUser._id });
+        return res.status(201).json({ message: "Logged in successfully", user: existingUser });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server failure" });
@@ -61,7 +61,7 @@ router.put("/api/users/:userId/bedtimes", async (req, res) => {
         const userId = req.params.userId;
         const newBedtimes = req.body.bedtimes;
 
-        const user = await User.findByIdAndUpdate(userId, { bedtimes: newBedTimes }, { new: true });
+        const user = await User.findByIdAndUpdate(userId, { bedtimes: newBedtimes }, { new: true });
 
         if (!user) {
             return res.status(404).json({ message: "User not found error" });
@@ -72,6 +72,6 @@ router.put("/api/users/:userId/bedtimes", async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
     }
-})
+});
 
 module.exports = router;

@@ -14,6 +14,12 @@ function App() {
         password: '',
         bedtimes: []
   });
+  const [currentUser, setCurrentUser] = useState({
+    userId: "",
+    username: "",
+    password: "",
+    bedtimes: []
+  });
 
   const handleTimeChange = (event) => {
     let userBedtime = event.target.value;
@@ -80,7 +86,7 @@ function App() {
       <br></br>
 
       <p>Sign up to save your bedtimes</p>
-      <SignupForm formData={formData} setFormData={setFormData} isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} userBedtimes={userBedtimes} timeDesignation={timeDesignation}/>
+      <SignupForm currentUser={currentUser} setCurrentUser={setCurrentUser} formData={formData} setFormData={setFormData} isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn} userBedtimes={userBedtimes} timeDesignation={timeDesignation}/>
     </div>
   );
 }
