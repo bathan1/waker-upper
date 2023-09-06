@@ -24,6 +24,7 @@ mongoose.connect(mongoURI, {
     useUnifiedTopology: true
 });
 
+// Reference the Connection object
 const db = mongoose.connection;
 
 db.on('error', (error) => {
