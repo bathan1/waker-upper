@@ -76,4 +76,33 @@ router.put("/api/users/:userId/bedtimes", async (req, res) => {
     }
 });
 
+// Handle deleting bedtimes
+router.delete("/api/users/:userId/bedtimes/:bedtimeId", async (req, res) => {
+    const userId = req.params.userId;
+    const bedtimeId = req.params.bedtimeId;
+
+    try {
+        const user = await User.findById(new ObjectId(userId));
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const indexToRemove = user.bedtimes.findIndex((bedtime) => bedtime._id === bedtimeId);
+
+        if (indexToRemove === -1) {
+            return res.status(404).json({ message: "Bedtime object not found" });
+        }
+
+        user.bedtimes.splice(indexToRemove, 1);
+
+        await user.save();
+
+        return res.status(200).json({ message: "Bedtime successfully removed" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 module.exports = router;
