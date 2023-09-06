@@ -1,22 +1,23 @@
-const Form = (props) => {
+const BedtimeForm = (props) => {
     const handleSaveBedtimes = async () => {
         props.userBedtimes.push(props.bedtime + " " + props.timeDesignation);
         props.setUserBedtimes(props.userBedtimes);
+        const signInData = {
+            username: props.currentUser.username,
+            password: props.currentUser.plainTextPassword
+        };
+        
         try {
             const response = await fetch("/signin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(props.formData)
+                body: JSON.stringify(signInData)
             });
-    
-            if (response.status === 200) {
-                const data = await response.json();
-                const userId = data.userId;
-                console.log("Signed in with user ID:", userId);
-                props.setIsSignedIn(true);
-            } else {
+            
+
+            if (response.status !== 201) {
                 console.log("Invalid username or password");
             }
         } catch (error) {
@@ -26,13 +27,13 @@ const Form = (props) => {
         const updatedBedtimes = props.userBedtimes;
 
         try {
-            const response = await fetch(`/api/users/${props.userId}/bedtimes`, {
+            const response = await fetch(`/api/users/${props.currentUser._id}/bedtimes`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    userId: props.userId, // Assuming you have access to the user's ID
+                    userId: props.currentUser.userId, // Assuming you have access to the user's ID
                     bedtimes: updatedBedtimes
                 }),
             });
@@ -73,4 +74,4 @@ const Form = (props) => {
     )
 }
 
-export default Form
+export default BedtimeForm

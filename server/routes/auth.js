@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user.js');
 const bcrypt = require("bcrypt");
+const { ObjectId } = require("mongodb");
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.post('/signup', async (req, res) => {
         const encryptedPassword = await bcrypt.hash(password, 10);
 
         // If we didn't return status 400, then this username password pair is good to be created
-        const newUser = new User({ username, password: encryptedPassword });
+        const newUser = new User({ username, plainTextPassword: password, password: encryptedPassword, bedtimes: [] });
 
         // Save this new user to the db
         await newUser.save();
@@ -37,6 +38,7 @@ router.post("/signin", async (req, res) => {
         const { username, password } = req.body;
 
         const existingUser = await User.findOne({ username });
+        existingUser.plainTextPassword = password;
 
         if (!existingUser) {
             return res.status(400).json({ message: `Username ${username} not found` });
@@ -61,7 +63,7 @@ router.put("/api/users/:userId/bedtimes", async (req, res) => {
         const userId = req.params.userId;
         const newBedtimes = req.body.bedtimes;
 
-        const user = await User.findByIdAndUpdate(userId, { bedtimes: newBedtimes }, { new: true });
+        const user = await User.findByIdAndUpdate(new ObjectId(userId), { bedtimes: newBedtimes }, { new: true });
 
         if (!user) {
             return res.status(404).json({ message: "User not found error" });

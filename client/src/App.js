@@ -15,7 +15,7 @@ function App() {
         bedtimes: []
   });
   const [currentUser, setCurrentUser] = useState({
-    userId: "",
+    _id: "",
     username: "",
     password: "",
     bedtimes: []
@@ -77,7 +77,7 @@ function App() {
       <p>If you wake up in the middle of a sleep cycle, you will feel groggy, even if you've completed several cycles prior to waking up.</p>
       <p>If you go to bed at the time you write, when should you wake up? </p>
 
-      <BedtimeForm formData={formData} setFormData={setFormData} bedtime={bedtime} 
+      <BedtimeForm currentUser={currentUser} formData={formData} setFormData={setFormData} bedtime={bedtime} 
                   timeDesignation={timeDesignation} setTimeDesignation={setTimeDesignation} 
                   calculateWakeTime={calculateWakeTime} handleTimeChange={handleTimeChange} 
                   isSignedIn={isSignedIn} userBedtimes={userBedtimes} setUserBedtimes={setUserBedtimes}
