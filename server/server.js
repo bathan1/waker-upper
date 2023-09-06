@@ -1,11 +1,12 @@
+require("dotenv").config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const authRoutes = require('./routes/auth'); // Import POST requests for signing up users
 
-// Import mongoose db key
-const config = require('./config');
-const mongoURI = config.mongoURI;
+// Set mongoURI using environment variables
+const mongoURI = process.env.DB_HOST;
 
 // Begin Express App
 const app = express();
