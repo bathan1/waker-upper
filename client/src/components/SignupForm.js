@@ -58,7 +58,7 @@ const SignupForm = (props) => {
             <div>Welcome {props.formData.username}</div>
             <div>Your saved bedtimes: </div>
             <ul>
-                {props.userBedtimes.map((bedtime, index) => {
+                {props.currentUser.bedtimes.map((bedtime, index) => {
                     return <li key={index}>{bedtime}</li>
                 })}
             </ul>
