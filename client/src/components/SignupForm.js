@@ -71,6 +71,7 @@ const SignupForm = (props) => {
             <br></br>
             <button type="submit" onClick={() => setButtonPressed("signUp")}>Sign up</button>
             <button type="submit" onClick={() => setButtonPressed("signIn")}>Sign in</button>
+            { props.isSignedIn ? <div>Welcome {formData.username} </div> : null}
         </form>
     );
 };

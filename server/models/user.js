@@ -10,8 +10,6 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.comparePassword = async function(candidatePassword) {
     try {
         const isMatch = await bcrypt.compare(candidatePassword, this.password);
-        console.log(candidatePassword);
-        console.log(this.password);
         return isMatch;
     } catch (error) {
         throw error;
