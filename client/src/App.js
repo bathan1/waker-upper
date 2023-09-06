@@ -4,6 +4,7 @@ import WakeUpViewer from './components/WakeUpViewer'
 import SignupForm from './components/SignupForm'
 
 function App() {
+  // Set up states
   const [bedtime, setBedtime] = useState('');
   const [wakeUpTimes, setWakeUpTimes] = useState([]);
   const [timeDesignation, setTimeDesignation] = useState('PM');
@@ -20,7 +21,7 @@ function App() {
     password: "",
     bedtimes: []
   });
-
+  
   const handleTimeChange = (event) => {
     let userBedtime = event.target.value;
     setBedtime(userBedtime);

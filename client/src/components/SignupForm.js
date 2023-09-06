@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 
 const SignupForm = (props) => {
+    // useState to keep track of which button was pressed (sign up or sign in)  
     const [buttonPressed, setButtonPressed] = useState("signUp");
 
+    // Handle change to the form text fields
     const handleChange = (event) => {
-        const {name, value}  = event.target;
+        const {name, value}  = event.target; // Destructure the event target to get the username and password
         props.setFormData({ ...props.formData, [name]: value });
     };
 
+
+    // Handle submitting either the sign up button or sign in button
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault(); // To prevent refreshing
         try {
             if (buttonPressed === "signUp") {
                 const response = await fetch('/signup', {
@@ -24,8 +28,8 @@ const SignupForm = (props) => {
                 } else {
                     console.log("Registration failed :(");
                 }
-            } else {
-                await fetch("/signin", {
+            } else { // If the "sign in" button was pressed
+                await fetch("/signin", { // Post to /signin
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -37,14 +41,14 @@ const SignupForm = (props) => {
                     if (data.message === "Logged in successfully" && data.user) {
                         console.log("Signed in!");
                         const user = data.user;
-                        props.setCurrentUser(user);
-                        props.setIsSignedIn(true);
-                        props.setUserBedtimes(user.bedtimes);
-                        event.preventDefault();
+                        props.setCurrentUser(user); // Set current user to signed in user
+                        props.setIsSignedIn(true); // Set isSignedIn state to true
+                        props.setUserBedtimes(user.bedtimes); // Set the user bedtimes
+                        event.preventDefault(); // To prevent refreshing again
                     }
                 })
                 .catch((error) => {
-                    console.error("Invalid username or password")
+                    console.error("Error:", error);
                 });
             }
             
@@ -53,6 +57,7 @@ const SignupForm = (props) => {
         }
     };
 
+    // Conditionally render user's saved bedtimes if isSignedIn is true
     let savedBedtimesView = null;
     if (props.isSignedIn) {
         savedBedtimesView = 
