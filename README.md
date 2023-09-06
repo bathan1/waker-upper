@@ -1,5 +1,8 @@
 A simple app to calculate wake up times using MongoDB, ExpressJS, ReactJS, and NodeJS to host the backend code. Enter your bedtime and it factors in the 15 minutes it takes to sleep to calculate your optimal wake up times.
 
+To update packages, npm install in root, server, and or client folders as they each
+have their own package.json
+
 React code is in ./client
 Express code is in ./server
 
