@@ -41,7 +41,7 @@ const SignupForm = () => {
                 if (response.status === 201) {
                     console.log("Signed in!");
                 } else {
-                    
+                    console.log("Invalid username or password");
                 }
             }
             

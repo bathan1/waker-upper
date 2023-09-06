@@ -15,9 +15,8 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'Username already exists'} );
         }
         
+        // Hash the password
         const encryptedPassword = await bcrypt.hash(password, 10);
-
-        console.log(encryptedPassword);
 
         // If we didn't return status 400, then this username password pair is good to be created
         const newUser = new User({ username, password: encryptedPassword });
