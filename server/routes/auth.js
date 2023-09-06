@@ -48,7 +48,7 @@ router.post("/signin", async (req, res) => {
             return res.status(401).json({ message: "Invalid password" });
         }
 
-        console.log("You're logged in!");
+        res.status(201).json({ message: "Logged in successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server failure" });

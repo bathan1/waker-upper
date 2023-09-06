@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 const SignupForm = () => {
+    const [buttonPressed, setButtonPressed] = useState("signUp");
+
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -14,18 +16,35 @@ const SignupForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch('/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-            if (response.status === 201) {
-                console.log("Registration success");
+            if (buttonPressed === "signUp") {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                if (response.status === 201) {
+                    console.log("Registration success");
+                } else {
+                    console.log("Registration failed :(");
+                }
             } else {
-                console.log("Registration failed :(");
+                const response = await fetch("/signin", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.status === 201) {
+                    console.log("Signed in!");
+                } else {
+                    
+                }
             }
+            
         } catch (error) {
             console.log('Error:', error);
         }
@@ -49,7 +68,8 @@ const SignupForm = () => {
                 placeholder="Password"
             />
             <br></br>
-            <button type="submit">Sign up</button>
+            <button type="submit" onClick={() => setButtonPressed("signUp")}>Sign up</button>
+            <button type="submit" onClick={() => setButtonPressed("signIn")}>Sign in</button>
         </form>
     );
 };
